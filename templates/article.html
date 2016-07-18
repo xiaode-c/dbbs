@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% load custom %}
+{% block left_content %}
+<div class="article-detail">
+<h2>{{article.title}}</h2>
+<p>
+    {{article.content | safe}}
+</p>
+
+<hr />
+
+<h3>评论</h3>
+{% build_comment_tree article.comment_set.select_related %}
+
+<div id="comment-box">
+    <form action="{% url 'new_comment' article.id %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" id="parent_id" name="parent_id">
+        <textarea name="comment" class="form-control" cols="30" rows="10"></textarea>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">评论</button>
+    </form>
+</div>
+</div>
+{% endblock %}
+
+{% block bottom-js %}
+<script>
+
+$(document).ready(function(){
+  $("a.reply").click(function(){
+    parent = $(this).attr("value");
+    console.log(parent)
+     $("input#parent_id").val(parent);
+  });
+});
+    
+</script>  
+{% endblock %}

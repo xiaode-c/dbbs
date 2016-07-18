@@ -1,0 +1,36 @@
+.left-content {
+    border: 2 solid crimson;
+}
+
+.right-content {
+    border: 2 solid black;
+}
+
+.article-box {
+    margin-bottom: 20px;
+}
+
+.article-head-img img {
+    height: 125px;
+    width: 220px;
+}
+
+.article-summary {
+    margin-left: 40px; 
+}
+
+.comment-node {
+    margin-top: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.username {
+    /*font-size: 16px;*/
+    font-weight: bold;
+    color: crimson;
+}
+
+.pub-date {
+    margin-left: 20px;
+    color: #aaa;
+}
