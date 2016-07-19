@@ -71,6 +71,7 @@ class UserProfile(models.Model):
     name = models.CharField(max_length=32)
     user = models.OneToOneField(User)
     groups = models.ManyToManyField('UserGroup')
+    user_img = models.ImageField(upload_to='user_img')
 
     def __str__(self):
         return "<User: %s>" % self.name

@@ -105,7 +105,16 @@ def new_comment(request, article_id):
         return HttpResponseRedirect('/article/%s/new_comment/' % article_id)
     return render(request, 'article.html', {'article':article})
 
-    
+def user_setting(request, user_name):
+    user = models.UserProfile.objects.get(name=user_name)
+    return render(request, 'user_setting.html', {'user':user})
+
+def change_avatar(request, name):
+    user = models.UserProfile.objects.get(name=name)
+    if request.method == "POST":
+        
+
+   
 
 # def tree_search(d_dic, parent, son):
 #     for k, v_dic in d_dic.items():
