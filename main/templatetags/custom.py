@@ -15,15 +15,48 @@ def tree_search(d_dic, comment):
             tree_search(d_dic[k], comment)
 
 def generate_comment_html(sub_comment_dic, margin_left_val):
-    html = ""
+    html = u""
     for k, v_dic in sub_comment_dic.items():
-        html += "<div style='margin-left:%spx;' class='comment-node'><p><span class='username'>" \
-                % margin_left_val + k.user.name + "</span><span class='pub-date'>" \
-                + str(k.pub_date.ctime()) +"</span></p><p>"+ k.comment +"</p>" + "<a class='reply' href='#comment-box' value="\
-                + str(k.id) +u">回复</a>" + "</div>"
+        html += child_node % (margin_left_val,  k.user.user_img.url, k.user.name, k.pub_date.ctime(), k.comment, k.id)
         if v_dic:
             html += generate_comment_html(v_dic, margin_left_val+50)
     return html
+
+
+child_node = u'''<div style='margin-left:%spx;' class='comment-node'>
+                    <div class='row'>
+                        <div class='col-md-2'>
+                            <img class='user-img' src='%s'>
+                        </div>
+                        <div class='col-md-10'>
+                            <p>
+                                <span class='username'>%s</span>
+                                <span class='pub-date'>%s</span>
+                            </p>
+                            <p>%s</p>
+                            <a class='reply' href='#comment-box' value='%s'>回复</a>
+                        </div>
+                    </div>
+                </div>'''
+
+
+parent_node = u'''<div class='comment-node'>
+                    <div class='row'>
+                        <div class='col-md-2'>
+                            <img class='user-img' src='%s' />
+                        </div>
+                        <div class='col-md-10'>
+                            <p>
+                                <span class='username'>%s</span>
+                                <span class='pub-date'>%s</span>
+                            </p>
+                            <p>%s</p>
+                            <a class='reply' href='#comment-box' value='%s'>回复</a>
+                        </div>
+                    </div>
+        </div>''' 
+
+
 
 # build comment tree
 @register.simple_tag
@@ -37,10 +70,9 @@ def build_comment_tree(comment_list):
     
     html = "<div class='comment-box'>"
     for k, v in comment_dic.items():
-        html += "<div class='comment-node'><p><span class='username'>"\
-                + k.user.name + "</span><span class='pub-date'>"+ str(k.pub_date.ctime()) \
-                +"</span></p><p>"+ k.comment +"</p>"+ "<a class='reply' href='#comment-box' value="\
-                + str(k.id) +u">回复</a>" + "</div>"
+        html += parent_node % (k.user.user_img.url, k.user.name, k.pub_date.ctime(), k.comment, k.id)
         html += generate_comment_html(v, 50)
-    html += "</div>"
+    # html += "</div>"
     return mark_safe(html)
+
+

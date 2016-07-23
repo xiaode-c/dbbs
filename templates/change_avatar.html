@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block left_content %}
+
+<form enctype="multipart/form-data" action="{% url 'change_avatar' user.name %}" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="InputFile">File input</label>
+        <input type="file" id="InputFile" name="user_img">
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+
+</form>
+
+{% endblock %}

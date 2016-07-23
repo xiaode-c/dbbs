@@ -15,7 +15,6 @@ urlpatterns = [
     url(r'^article/new/$', views.new_article, name="new_article"),
     url(r'^article/(\d+)/new_comment/$', views.new_comment, name="new_comment"),
     url(r'^account/register/$', views.account_register, name="register"),
-    url(r'^(\w+)/user_setting/$', views.user_setting, name="user_setting")
-    url(r'^(\w+)/change_avatar/$', views.change_avatar, name="change_avatar")
-    
+    url(r'^user/(\w+)/user_setting/$', views.user_setting, name="user_setting"),
+    url(r'^user/(\w+)/change_avatar/$', views.change_avatar, name="change_avatar")
 ]

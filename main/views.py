@@ -79,8 +79,8 @@ def new_article(request):
             print("--form data:", form.cleaned_data)
             form_data = form.cleaned_data
             form_data['author_id'] = request.user.userprofile.id
-            img_path = handle_uploaded_file(request, request.FILES['head_imag'])
-            form_data['head_imag'] = img_path
+            # img_path = handle_uploaded_file(request, request.FILES['head_imag'])
+            form_data['head_imag'] = request.FILES['head_imag']
             new_article_obj = models.Article(**form_data)
             new_article_obj.save()
             return render(request, 'new_article.html', {'new_article_obj': new_article_obj})
@@ -102,7 +102,7 @@ def new_comment(request, article_id):
         
         comment = models.Comment(article=article, user=user, comment=comment, parent_comment=parent_comment)
         comment.save()
-        return HttpResponseRedirect('/article/%s/new_comment/' % article_id)
+        return HttpResponseRedirect('/article/%s/#comment' % article_id)
     return render(request, 'article.html', {'article':article})
 
 def user_setting(request, user_name):
@@ -112,6 +112,9 @@ def user_setting(request, user_name):
 def change_avatar(request, name):
     user = models.UserProfile.objects.get(name=name)
     if request.method == "POST":
+        user.user_img = request.FILES["user_img"]
+        user.save()
+    return render(request, 'change_avatar.html', {'user':user})
         
 
    

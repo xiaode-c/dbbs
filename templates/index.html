@@ -1,81 +1,6 @@
-<!DOCTYPE html>
-<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="http://v3.bootcss.com/favicon.ico">
+{% extends "base.html" %}
 
-    <title>BBS</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/static/bootstrap/css/style.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="/static/bootstrap/css/navbar-static-top.css" rel="stylesheet">
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="/static/bootstrap/js/ie-emulation-modes-warning.js"></script>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  {% block head-js %}
-  {% endblock %}
-  </head>
-
-  <body>
-
-    <!-- Static navbar -->
-    <nav class="navbar navbar-default navbar-static-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/">ITBBS</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="/">Home</a></li>
-            <li><a href="{% url 'category' 1 %}">Abut</a></li>
-            <li><a href="{% url 'category' 2 %}">Abot</a></li>
-            <li><a href="{% url 'category' 3 %}">Abou</a></li>
-            
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            {% if request.user.is_authenticated %}
-            <li class="dropdown">
-              <a href="http://v3.bootcss.com/examples/navbar-static-top/#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{request.user.userprofile.name}}<span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="{% url 'new_article' %}">发帖</a></li>
-                <li><a href="http://v3.bootcss.com/examples/navbar-static-top/#">Another action</a></li>
-                <li><a href="http://v3.bootcss.com/examples/navbar-static-top/#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="http://v3.bootcss.com/examples/navbar-static-top/#">Separated link</a></li>
-                <li><a href="{% url 'logout' %}">注销</a></li>
-              </ul>
-            </li>
-            {% else %}
-              <li><a href="{% url 'login' %}">登录</a></li>
-              <li><a href="{% url 'register' %}">注册</a></li>
-            {% endif %}
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
-
-
-    <div class="container">      
+   
       {% block page-container %}
       <div class="row">
         <div class="col-md-8 left-content">
@@ -83,7 +8,7 @@
               {% for article in articles  reversed%}
                 <div class="article-box row">
                   <div class="article-head-img col-md-3">
-                      <img src="{{article.head_imag}}" alt="">
+                      <img src="{{article.head_imag.url}}" alt="">
                   </div>
                   <div class="article-summary col-md-8">
                       <h3><a href="{% url 'article_detail' article.id %}">{{article.title}}</a></h3>
@@ -109,17 +34,9 @@
       </div>
       {% endblock %}
 
-    </div> <!-- /container -->
+    
 
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/static/bootstrap/js/jquery.min.js"></script>
-    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="/static/bootstrap/js/ie10-viewport-bug-workaround.js"></script>
-  
+{% block bottom-js %}
     <script>
       $(document).ready(function(){
         var menus = $("#navbar a[href='{{ request.path }}']")[0]
@@ -127,6 +44,4 @@
       });
     </script>
 
-{% block bottom-js %}
-  {% endblock %}
-</body></html>
+{% endblock %}
